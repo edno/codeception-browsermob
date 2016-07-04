@@ -1,0 +1,37 @@
+{
+    "name": "edno/codeception-browsermob",
+    "description": "Codeception extension providing BrowserMob Proxy capabilities",
+    "keywords": ["codeception", "extension", "proxy"],
+    "homepage": "https://github.com/edno/codeception-browsermob",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Greg Heitz",
+            "email": "edno_gh@yahoo.fr"
+        }
+    ],
+    "require": {
+        "php": "^5.4 || ^7.0",
+        "codeception/codeception": "^2.2"
+    },
+    "require-dev": {
+        "satooshi/php-coveralls": "^1.0",
+        "victorjonsson/markdowndocs": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "Codeception\\Extension\\": "src/"
+        }
+    },
+    "config": {
+      "preferred-install": "dev"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "doc": [
+            "mkdir -p docs",
+            "vendor/victorjonsson/markdowndocs/bin/phpdoc-md generate src > docs/extension.md"
+        ]
+    }
+}
