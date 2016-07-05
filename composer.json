@@ -16,7 +16,8 @@
     },
     "require-dev": {
         "satooshi/php-coveralls": "^1.0",
-        "victorjonsson/markdowndocs": "dev-master"
+        "victorjonsson/markdowndocs": "dev-master",
+        "chartjes/php-browsermob-proxy": "dev-master"
     },
     "autoload": {
         "psr-4": {
@@ -29,7 +30,7 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "scripts": {
-        "doc": [
+        "phpdoc-md": [
             "mkdir -p docs",
             "vendor/victorjonsson/markdowndocs/bin/phpdoc-md generate src > docs/extension.md"
         ]
