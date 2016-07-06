@@ -90,7 +90,7 @@ class BrowserMob extends Module
             } catch(\Exception $e) {
                 throw new ModuleConfigException(__CLASS__, $e->getMessage());
             }
-            
+
             if (get_class($response) === 'Request')
             {
                 if (false === $response->success) {
