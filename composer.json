@@ -32,7 +32,7 @@
     "scripts": {
         "docker-build": "docker pull shopigniter/browsermob-proxy",
         "docker-run": [
-            "docker run -p 9090:9090 -p 9091:9091 --name codecept_browsermob shopigniter/browsermob-proxy",
+            "docker run -d -p 9090:9090 -p 9091:9091 --name codecept_browsermob shopigniter/browsermob-proxy",
             "docker ps -a"
         ],
         "docker-stop": "docker stop codecept_browsermob",
