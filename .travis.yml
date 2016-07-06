@@ -17,6 +17,7 @@ before_script:
   - composer install
   - composer docker-build
   - composer docker-run
+  - sleep 20
 
 script:
  - ./vendor/bin/codecept run --coverage-xml

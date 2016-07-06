@@ -30,16 +30,16 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "scripts": {
-        "docker-build": "docker pull shopigniter/browsermob-proxy",
+        "docker-build": "docker build -t codecept/browsermob tests/_data/docker/",
         "docker-run": [
-            "docker run -d -p 9090:9090 -p 9091:9091 --name codecept_browsermob shopigniter/browsermob-proxy",
+            "docker run -d -p 9090:9090 -p 9091:9091 --name codecept_browsermob codecept/browsermob",
             "docker ps -a"
         ],
         "docker-stop": "docker stop codecept_browsermob",
         "docker-restart": "docker restart codecept_browsermob",
         "docker-remove": [
             "docker rm -f codecept_browsermob",
-            "docker rmi shopigniter/browsermob-proxy"
+            "docker rmi codecept/browsermob"
         ],
         "phpdoc-md": [
             "mkdir -p docs",
