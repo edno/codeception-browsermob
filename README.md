@@ -18,8 +18,20 @@ The [Codeception](http://codeception.com/) module for [BrowserMob Proxy](http://
 - BrowserMob Proxy
 
 ## Installation
-*TODO*
+The module can be installed using [Composer](https://getcomposer.org)
 
+```bash
+$ composer require edno/codeception-browsermob
+```
+
+Be sure to enable the module as shown in
+[configuration](#configuration) below.
 
 ## Configuration
-*TODO*
+Enabling **BrowserMob** is done in your configuration file `.yml`.
+
+```yaml
+module:
+    enabled:
+        - Codeception\Extension\BrowserMob
+```
