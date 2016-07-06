@@ -30,6 +30,17 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "scripts": {
+        "docker-build": "docker pull shopigniter/browsermob-proxy",
+        "docker-run": [
+            "docker run -p 9090:9090 -p 9091:9091 --name codecept_browsermob shopigniter/browsermob-proxy",
+            "docker ps -a"
+        ],
+        "docker-stop": "docker stop codecept_browsermob",
+        "docker-restart": "docker restart codecept_browsermob",
+        "docker-remove": [
+            "docker rm -f codecept_browsermob",
+            "docker rmi shopigniter/browsermob-proxy"
+        ],
         "phpdoc-md": [
             "mkdir -p docs",
             "vendor/victorjonsson/markdowndocs/bin/phpdoc-md generate src > docs/extension.md"
