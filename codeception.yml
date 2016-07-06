@@ -1,21 +1,26 @@
 actor: Tester
+
 paths:
     tests: tests
     log: tests/_output
     data: tests/_data
     support: tests/_support
     envs: tests/_envs
+
 settings:
     bootstrap: _bootstrap.php
     colors: true
     memory_limit: 1024M
-extensions:
-    enabled:
-        - Codeception\Extension\RunFailed
+    strict_xml: true
+
+coverage:
+    enabled: true
+    whitelist:
+        include:
+            - src/*
+
 modules:
     config:
-        Db:
-            dsn: ''
-            user: ''
-            password: ''
-            dump: tests/_data/dump.sql
+        Codeception\Extension\BrowserMob:
+            host: 'localhost'
+            port: 8888
