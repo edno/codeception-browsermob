@@ -12,12 +12,13 @@
     ],
     "require": {
         "php": "^5.5 || ^7.0",
-        "codeception/codeception": "^2.2"
+        "codeception/codeception": "^2.2",
+        "chartjes/php-browsermob-proxy": "dev-master"
     },
     "require-dev": {
         "satooshi/php-coveralls": "^1.0",
         "victorjonsson/markdowndocs": "dev-master",
-        "chartjes/php-browsermob-proxy": "dev-master"
+        "nategood/httpful": "^0.2"
     },
     "autoload": {
         "psr-4": {
