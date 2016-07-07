@@ -6,6 +6,7 @@ use Codeception\Exception\ModuleException;
 use Codeception\Exception\ModuleConfigException;
 use \PHPBrowserMobProxy_Client as BMP;
 use \Requests;
+use \RuntimeException;
 
 class BrowserMob extends Module
 {
@@ -157,7 +158,7 @@ class BrowserMob extends Module
     public function getLimit()
     {
         try {
-            $har = $this->bmp->getLimit();
+            return $this->bmp->getLimit();
         } catch(\Exception $e) {
             throw new ModuleException(__CLASS__, $e->getMessage());
         }
