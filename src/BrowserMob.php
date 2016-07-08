@@ -39,7 +39,7 @@ class BrowserMob extends Module
 
         // start a new BrowserMobProxy session
         if (isset($this->config['autostart'])) {
-            if (true === (bool)$this->config['autostart']) {
+            if (true === (bool) $this->config['autostart']) {
                 $this->openProxy();
             }
         }
@@ -49,7 +49,7 @@ class BrowserMob extends Module
     {
         try {
             $response = Requests::get('http://'.$url.'/proxy/');
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             throw new ModuleException(__CLASS__, $e->getMessage());
         }
 
@@ -91,7 +91,7 @@ class BrowserMob extends Module
                             // do nothing
                     }
                 }
-            } catch(\Exception $e) {
+            } catch (\Exception $e) {
                 throw new ModuleConfigException(__CLASS__, $e->getMessage());
             }
 
@@ -112,7 +112,7 @@ class BrowserMob extends Module
                 $capabilities = $this->config;
             }
             $this->__setProxyCapabilities($capabilities);
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             throw new ModuleException(__CLASS__, $e->getMessage());
         }
     }
@@ -121,7 +121,7 @@ class BrowserMob extends Module
     {
         try {
             $this->bmp->close();
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             throw new ModuleException(__CLASS__, $e->getMessage());
         }
     }
@@ -130,7 +130,7 @@ class BrowserMob extends Module
     {
         try {
             $response = $this->bmp->newHar();
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             throw new ModuleException(__CLASS__, $e->getMessage());
         }
         return $response->success;
@@ -140,7 +140,7 @@ class BrowserMob extends Module
     {
         try {
             $response = $this->bmp->newPage();
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             throw new ModuleException(__CLASS__, $e->getMessage());
         }
         return $response->success;
@@ -150,7 +150,7 @@ class BrowserMob extends Module
     {
         try {
             return $this->bmp->har;
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             throw new ModuleException(__CLASS__, $e->getMessage());
         }
     }
