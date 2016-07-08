@@ -8,10 +8,29 @@ use \PHPBrowserMobProxy_Client as BMP;
 use \Requests;
 use \RuntimeException;
 
+/**
+ * @method void _open()
+ * @method void _close()
+ * @method string _newHar(string $label='')
+ * @method string _newPage(string $label='')
+ * @method string _blacklist(string $regexp, integer $status_code)
+ * @method string _whitelist(string $regexp, integer $status_code)
+ * @method string _basicAuth(string $domain, string[] $options)
+ * @method string _headers(string[] $options)
+ * @method string _responseInterceptor(string $js)
+ * @method string _requestInterceptor(string $js)
+ * @method Requests_Response _limits(string[] $options)
+ * @method Requests_Response _timeouts(string[] $options)
+ * @method string _remapHosts(string $address, string $ip_address)
+ * @method string _waitForTrafficToStop(integer $quiet_period, integer $timeout)
+ * @method string _clearDnsCache()
+ * @method string _rewriteUrl(string $match, string $replace)
+ * @method string _retry(integer $retry_count)
+ */
 class BrowserMob extends Module
 {
 
-    protected $config = ['host', 'port', 'autostart', 'blacklist', 'whitelist', 'limits', 'timeouts', 'redirect', 'retry', 'basicAuth'];
+    protected $config = ['host', 'port', 'autostart', 'blacklist', 'whitelist', 'limits', 'timeouts', 'redirect', 'retry', 'basicAuth', 'littleproxy'];
 
     protected $requiredFields = ['host'];
 
@@ -67,7 +86,7 @@ class BrowserMob extends Module
                         case 0: // fix a weird PHP behaviour: when $config === 0 then go in 'blacklist'
                             break;
                         case 'blacklist':
-                            $response = $this-_blacklist($data);
+                            $response = $this->_blacklist($data);
                             break;
                         case 'whitelist':
                             $response = $this->_whitelist($data);
@@ -164,7 +183,7 @@ class BrowserMob extends Module
         }
     }
 
-    // magic function giving direct access to BrowserMobProxy class methods
+    // magic function that exposes BrowserMobProxy API pulic methods
     public function __call($method, $args)
     {
         // check if is a command call
