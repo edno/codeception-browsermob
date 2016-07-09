@@ -22,7 +22,6 @@ class BrowserMobProxyCest
         $I->assertEquals('BrowserMob Proxy', $har['log']['creator']['name']);
         $I->assertEquals('http://codeception.com/', $har['log']['entries'][0]['request']['url']);
         $I->assertNotNull($har['log']['entries'][0]['serverIPAddress']);
-        $rep = $I->closeProxy();
-        $I->assertTrue($rep);
+        $I->closeProxy();
     }
 }
