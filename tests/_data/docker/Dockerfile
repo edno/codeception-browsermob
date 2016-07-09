@@ -14,5 +14,5 @@ RUN mv /browsermob* /browsermob-proxy
 COPY start.sh /
 RUN chmod +x /start.sh
 
-EXPOSE 9090-9099
+EXPOSE 9090-9091
 CMD ["/start.sh"]
