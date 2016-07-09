@@ -123,6 +123,11 @@ class BrowserMob extends Module
         }
     }
 
+    public function getProxyPort()
+    {
+        return $this->bmp->port;
+    }
+
     public function openProxy($capabilities = null)
     {
         try {
@@ -134,6 +139,7 @@ class BrowserMob extends Module
         } catch (\Exception $e) {
             throw new ModuleException(__CLASS__, $e->getMessage());
         }
+        return $this->getProxyPort();
     }
 
     public function closeProxy()
