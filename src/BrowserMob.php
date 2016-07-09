@@ -184,7 +184,7 @@ class BrowserMob extends Module
     {
         try {
             return $this->bmp->getLimit();
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             throw new ModuleException(__CLASS__, $e->getMessage());
         }
     }
