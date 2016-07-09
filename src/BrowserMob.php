@@ -34,7 +34,7 @@ class BrowserMob extends Module
 
     protected $requiredFields = ['host'];
 
-    protected $lastResponse;
+    protected $response;
 
     private $bmp;
 
@@ -86,25 +86,25 @@ class BrowserMob extends Module
                         case 0: // fix a weird PHP behaviour: when $config === 0 then go in 'blacklist'
                             break;
                         case 'blacklist':
-                            $response = $this->_blacklist($data);
+                            $this->response = $this->_blacklist($data);
                             break;
                         case 'whitelist':
-                            $response = $this->_whitelist($data);
+                            $this->response = $this->_whitelist($data);
                             break;
                         case 'limits':
-                            $response = $this->_limits($data);
+                            $this->response = $this->_limits($data);
                             break;
                         case 'timeouts':
-                            $response = $this->_timeouts($data);
+                            $this->response = $this->_timeouts($data);
                             break;
                         case 'redirect':
-                            $response = $this->_remapHosts($data);
+                            $this->response = $this->_remapHosts($data);
                             break;
                         case 'retry':
-                            $response = $this->_retry($data);
+                            $this->response = $this->_retry($data);
                             break;
                         case 'basicAuth':
-                            $response = $this->_basicAuth($data);
+                            $this->response = $this->_basicAuth($data);
                             break;
                         default:
                             // do nothing
@@ -116,7 +116,8 @@ class BrowserMob extends Module
 
             if (get_class($response) === 'Request')
             {
-                if (false === $response->success) {
+                $this->response = $reponse;
+                if (false === $this->response->success) {
                     throw new ModuleConfigException(__CLASS__, "Proxy response error '{$reponse->status_code}' {$respone->body}");
                 }
             }
@@ -154,21 +155,21 @@ class BrowserMob extends Module
     public function startHar()
     {
         try {
-            $response = $this->bmp->newHar();
+            $this->response = $this->bmp->newHar();
         } catch (\Exception $e) {
             throw new ModuleException(__CLASS__, $e->getMessage());
         }
-        return $response->success;
+        return $this->response->success;
     }
 
     public function startPage()
     {
         try {
-            $response = $this->bmp->newPage();
+            $this->response = $this->bmp->newPage();
         } catch (\Exception $e) {
             throw new ModuleException(__CLASS__, $e->getMessage());
         }
-        return $response->success;
+        return $this->response->success;
     }
 
     public function getHar()

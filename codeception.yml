@@ -24,3 +24,10 @@ modules:
         Codeception\Extension\BrowserMob:
             host: 'localhost'
             port: 9090
+
+env:
+    default:
+    autostart:
+        config:
+            Codeception\Extension\BrowserMob:
+                autostart: true
