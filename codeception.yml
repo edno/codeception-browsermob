@@ -28,6 +28,7 @@ modules:
 env:
     default:
     autostart:
-        config:
-            Codeception\Extension\BrowserMob:
-                autostart: true
+        modules:
+            config:
+                Codeception\Extension\BrowserMob:
+                    autostart: true
