@@ -25,6 +25,7 @@ modules:
             host: 'localhost'
             port: 9090
 
+
 env:
     default:
     autostart:
@@ -32,3 +33,22 @@ env:
             config:
                 Codeception\Extension\BrowserMob:
                     autostart: true
+    blacklist:
+        modules:
+            config:
+                Codeception\Extension\BrowserMob:
+                    autostart: true
+                    blacklist:
+                        code: 404
+                        patterns:
+                            - 'http://google.com/.*'
+                            - 'yahoo.com'
+    whitelist:
+        modules:
+            config:
+                Codeception\Extension\BrowserMob:
+                    autostart: true
+                    whitelist:
+                        code: 404
+                        patterns:
+                            - 'http://codeception.com/'

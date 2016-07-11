@@ -41,6 +41,7 @@ class BrowserMobProxyCest
         Requests::get('http://codeception.com/', [], ['proxy' => "127.0.0.1:${port}"]);
         $har = $I->getHar();
         $I->assertEquals('BrowserMob Proxy', $har['log']['creator']['name']);
+        $I->assertNotEmpty($har['log']['entries']);
         $I->assertEquals('http://codeception.com/', $har['log']['entries'][0]['request']['url']);
         $I->assertNotNull($har['log']['entries'][0]['serverIPAddress']);
         $I->closeProxy();
@@ -50,8 +51,9 @@ class BrowserMobProxyCest
 
     /**
      * @env blacklist
+     * @env whitelist
      */
-    public function parameterBlacklist(FunctionalTester $I)
+    public function parameterBlackAndWhiteList(FunctionalTester $I)
     {
         $port = $I->getProxyPort();
         $I->assertNotNull($port);

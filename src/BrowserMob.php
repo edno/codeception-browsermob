@@ -82,14 +82,25 @@ class BrowserMob extends Module
         foreach ($capabilities as $config => $data) {
             try {
                 if (false === empty($data)) {
-                    switch ($config) {
-                        case 0: // fix a weird PHP behaviour: when $config === 0 then go in 'blacklist'
-                            break;
+                    switch ((string) $config) {
                         case 'blacklist':
-                            $response = $this->_blacklist($data);
+                            foreach ($data['patterns'] as $pattern) {
+                                $response = $this->_blacklist($pattern, $data['code']);
+                                if (isset($response->success)) {
+                                    if (false === $response->success) {
+                                        break;
+                                    }
+                                }
+                            }
                             break;
                         case 'whitelist':
-                            $response = $this->_whitelist($data);
+                            $patterns = implode(',', $data['patterns']);
+                            $response = $this->_whitelist($patterns, $data['code']);
+                            if (isset($response->success)) {
+                                if (false === $response->success) {
+                                    break;
+                                }
+                            }
                             break;
                         case 'limits':
                             $response = $this->_limits($data);
@@ -98,13 +109,27 @@ class BrowserMob extends Module
                             $response = $this->_timeouts($data);
                             break;
                         case 'redirect':
-                            $response = $this->_remapHosts($data);
+                            foreach ($data as $entry) {
+                                $response = $this->_remapHosts($entry['address'], $entry['ip']);
+                                if (isset($response->success)) {
+                                    if (false === $response->success) {
+                                        break;
+                                    }
+                                }
+                            }
                             break;
                         case 'retry':
                             $response = $this->_retry($data);
                             break;
                         case 'basicAuth':
-                            $response = $this->_basicAuth($data);
+                            foreach ($data as $entry) {
+                                $response = $this->_basicAuth($entry['domain'], $entry['options']);
+                                if (isset($response->success)) {
+                                    if (false === $response->success) {
+                                        break;
+                                    }
+                                }
+                            }
                             break;
                         default:
                             // do nothing
@@ -193,21 +218,24 @@ class BrowserMob extends Module
     // magic function that exposes BrowserMobProxy API pulic methods
     public function __call($method, $args)
     {
+        $ret = null;
         // check if is a command call
         if (preg_match('/^_[A-z]+$/', $method)) {
             // extract standard method name
             $method = preg_filter('/_/', '', $method);
             // set call array for calling method
-            $call = array($this, $method);
+            $call = array($this->bmp, $method);
             // check if method is callable
             if (is_callable($call)) {
-                call_user_func_array($call, $args);
+                $ret = call_user_func_array($call, $args);
             } else {
                 throw new RuntimeException("Method ${method} does not exist or is not callable");
             }
         } else {
             throw new RuntimeException("Method ${method} does not exist or is not callable");
         }
+
+        return $ret;
     }
 
 }

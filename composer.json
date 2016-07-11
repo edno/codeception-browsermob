@@ -33,7 +33,7 @@
     "scripts": {
         "docker-build": "docker build -t codecept/browsermob tests/_data/docker/",
         "docker-run": [
-            "docker run -d -p 9090-9091:9090-9091 --name codecept_browsermob codecept/browsermob",
+            "docker run -d -p 9090-9099:9090-9099 --name codecept_browsermob codecept/browsermob",
             "docker ps -a"
         ],
         "docker-stop": "docker stop codecept_browsermob",
