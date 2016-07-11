@@ -86,25 +86,25 @@ class BrowserMob extends Module
                         case 0: // fix a weird PHP behaviour: when $config === 0 then go in 'blacklist'
                             break;
                         case 'blacklist':
-                            $this->response = $this->_blacklist($data);
+                            $response = $this->_blacklist($data);
                             break;
                         case 'whitelist':
-                            $this->response = $this->_whitelist($data);
+                            $response = $this->_whitelist($data);
                             break;
                         case 'limits':
-                            $this->response = $this->_limits($data);
+                            $response = $this->_limits($data);
                             break;
                         case 'timeouts':
-                            $this->response = $this->_timeouts($data);
+                            $response = $this->_timeouts($data);
                             break;
                         case 'redirect':
-                            $this->response = $this->_remapHosts($data);
+                            $response = $this->_remapHosts($data);
                             break;
                         case 'retry':
-                            $this->response = $this->_retry($data);
+                            $response = $this->_retry($data);
                             break;
                         case 'basicAuth':
-                            $this->response = $this->_basicAuth($data);
+                            $response = $this->_basicAuth($data);
                             break;
                         default:
                             // do nothing
@@ -116,9 +116,9 @@ class BrowserMob extends Module
 
             if (get_class($response) === 'Request')
             {
-                $this->response = $reponse;
-                if (false === $this->response->success) {
-                    throw new ModuleConfigException(__CLASS__, "Proxy response error '{$reponse->status_code}' {$respone->body}");
+                $this->response = $response;
+                if (false === $response->success) {
+                    throw new ModuleConfigException(__CLASS__, "Proxy response error '{$response->status_code}' {$respone->body}");
                 }
             }
         }
