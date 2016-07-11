@@ -218,7 +218,6 @@ class BrowserMob extends Module
     // magic function that exposes BrowserMobProxy API pulic methods
     public function __call($method, $args)
     {
-        $ret = null;
         // check if is a command call
         if (preg_match('/^_[A-z]+$/', $method)) {
             // extract standard method name
@@ -234,7 +233,7 @@ class BrowserMob extends Module
         } else {
             throw new RuntimeException("Method ${method} does not exist or is not callable");
         }
-
+        $ret = (isset($ret)) ? $ret : null;
         return $ret;
     }
 
