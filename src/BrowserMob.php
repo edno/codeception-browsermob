@@ -199,20 +199,7 @@ class BrowserMob extends Module
 
     public function getHar()
     {
-        try {
-            return $this->bmp->har;
-        } catch (\Exception $e) {
-            throw new ModuleException(__CLASS__, $e->getMessage());
-        }
-    }
-
-    public function getLimit()
-    {
-        try {
-            return $this->bmp->getLimit();
-        } catch (\Exception $e) {
-            throw new ModuleException(__CLASS__, $e->getMessage());
-        }
+        return $this->bmp->har;
     }
 
     // magic function that exposes BrowserMobProxy API pulic methods
