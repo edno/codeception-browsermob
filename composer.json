@@ -17,8 +17,7 @@
     },
     "require-dev": {
         "satooshi/php-coveralls": "^1.0",
-        "victorjonsson/markdowndocs": "dev-master",
-        "nategood/httpful": "^0.2"
+        "victorjonsson/markdowndocs": "dev-master"
     },
     "autoload": {
         "psr-4": {
@@ -33,11 +32,14 @@
     "scripts": {
         "docker-build": "docker build -t codecept/browsermob tests/_data/docker/",
         "docker-run": [
-            "docker run -d -p 9090-9099:9090-9099 --name codecept_browsermob codecept/browsermob",
+            "docker run -d -p 9090-9189:9090-9189 --name codecept_browsermob codecept/browsermob",
             "docker ps -a"
         ],
         "docker-stop": "docker stop codecept_browsermob",
-        "docker-restart": "docker restart codecept_browsermob",
+        "docker-restart": [
+            "docker restart codecept_browsermob",
+            "sleep 5"
+        ],
         "docker-remove": [
             "docker rm -f codecept_browsermob",
             "docker rmi codecept/browsermob"
