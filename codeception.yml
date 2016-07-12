@@ -52,3 +52,48 @@ env:
                         code: 404
                         patterns:
                             - 'http://codeception.com/'
+    limits:
+        modules:
+            config:
+                Codeception\Extension\BrowserMob:
+                    autostart: true
+                    limits:
+                        downstreamKbps: 12
+                        upstreamKbps: 12
+                        latency: 1
+    timeouts:
+        modules:
+            config:
+                Codeception\Extension\BrowserMob:
+                    autostart: true
+                    timeouts:
+                        request: 10
+                        read: 10
+                        connection: 10
+                        dns: 10
+    redirect:
+        modules:
+            config:
+                Codeception\Extension\BrowserMob:
+                    autostart: true
+                    redirect:
+                        - domain: example.local
+                          ip: 127.0.0.1
+                        - domain: github.com
+                          ip: 192.168.1.1
+    basicAuth:
+        modules:
+            config:
+                Codeception\Extension\BrowserMob:
+                    autostart: true
+                    basicAuth:
+                        - domain: example.local
+                          options:
+                              username: myUsername
+                              password: myPassword
+    retry:
+        modules:
+            config:
+                Codeception\Extension\BrowserMob:
+                    autostart: true
+                    retry: 3

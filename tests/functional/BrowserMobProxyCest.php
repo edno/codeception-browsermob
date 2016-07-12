@@ -53,7 +53,31 @@ class BrowserMobProxyCest
      * @env blacklist
      * @env whitelist
      */
-    public function parameterBlackAndWhiteList(FunctionalTester $I)
+    public function parameterBlackWhiteList(FunctionalTester $I)
+    {
+        $port = $I->getProxyPort();
+        $I->assertNotNull($port);
+        $I->closeProxy();
+        $port = $I->getProxyPort();
+        //$I->assertNotNull($port); // BrowserMobProxy_Client issue
+    }
+
+    /**
+     * @env limits
+     */
+    public function parameterLimits(FunctionalTester $I)
+    {
+        $port = $I->getProxyPort();
+        $I->assertNotNull($port);
+        $I->closeProxy();
+        $port = $I->getProxyPort();
+        //$I->assertNotNull($port); // BrowserMobProxy_Client issue
+    }
+
+    /**
+     * @env timeouts
+     */
+    public function parameterTimeouts(FunctionalTester $I)
     {
         $port = $I->getProxyPort();
         $I->assertNotNull($port);

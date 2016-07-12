@@ -99,7 +99,7 @@ class BrowserMob extends Module
                         break;
                     case 'redirect':
                         foreach ($data as $entry) {
-                            $this->_remapHosts($entry['address'], $entry['ip']);
+                            $this->_remapHosts($entry['domain'], $entry['ip']);
                             if (false === $this->response->success) break;
                         }
                         break;
