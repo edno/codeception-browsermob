@@ -80,70 +80,42 @@ class BrowserMob extends Module
         $response = null;
 
         foreach ($capabilities as $config => $data) {
-            try {
-                if (false === empty($data)) {
-                    switch ((string) $config) {
-                        case 'blacklist':
-                            foreach ($data['patterns'] as $pattern) {
-                                $response = $this->_blacklist($pattern, $data['code']);
-                                if (isset($response->success)) {
-                                    if (false === $response->success) {
-                                        break;
-                                    }
-                                }
-                            }
-                            break;
-                        case 'whitelist':
-                            $patterns = implode(',', $data['patterns']);
-                            $response = $this->_whitelist($patterns, $data['code']);
-                            if (isset($response->success)) {
-                                if (false === $response->success) {
-                                    break;
-                                }
-                            }
-                            break;
-                        case 'limits':
-                            $response = $this->_limits($data);
-                            break;
-                        case 'timeouts':
-                            $response = $this->_timeouts($data);
-                            break;
-                        case 'redirect':
-                            foreach ($data as $entry) {
-                                $response = $this->_remapHosts($entry['address'], $entry['ip']);
-                                if (isset($response->success)) {
-                                    if (false === $response->success) {
-                                        break;
-                                    }
-                                }
-                            }
-                            break;
-                        case 'retry':
-                            $response = $this->_retry($data);
-                            break;
-                        case 'basicAuth':
-                            foreach ($data as $entry) {
-                                $response = $this->_basicAuth($entry['domain'], $entry['options']);
-                                if (isset($response->success)) {
-                                    if (false === $response->success) {
-                                        break;
-                                    }
-                                }
-                            }
-                            break;
-                        default:
-                            // do nothing
-                    }
-                }
-            } catch (\Exception $e) {
-                throw new ModuleConfigException(__CLASS__, $e->getMessage());
-            }
-
-            if (get_class($response) === 'Request')
-            {
-                $this->response = $response;
-                if (false === $response->success) {
-                    throw new ModuleConfigException(__CLASS__, "Proxy response error '{$response->status_code}' {$respone->body}");
+            if (false === empty($data)) {
+                switch ((string) $config) {
+                    case 'blacklist':
+                        foreach ($data['patterns'] as $pattern) {
+                            $this->_blacklist($pattern, $data['code']);
+                            if (false === $this->response->success) break;
+                        }
+                        break;
+                    case 'whitelist':
+                        $patterns = implode(',', $data['patterns']);
+                        $this->_whitelist($patterns, $data['code']);
+                        if (false === $this->response->success) break;
+                        break;
+                    case 'limits':
+                        $this->_limits($data);
+                        break;
+                    case 'timeouts':
+                        $this->_timeouts($data);
+                        break;
+                    case 'redirect':
+                        foreach ($data as $entry) {
+                            $this->_remapHosts($entry['address'], $entry['ip']);
+                            if (false === $this->response->success) break;
+                        }
+                        break;
+                    case 'retry':
+                        $this->_retry($data);
+                        break;
+                    case 'basicAuth':
+                        foreach ($data as $entry) {
+                            $this->_basicAuth($entry['domain'], $entry['options']);
+                            if (false === $this->response->success) break;
+                        }
+                        break;
+                    default:
+                        // do nothing
                 }
             }
         }
@@ -158,13 +130,13 @@ class BrowserMob extends Module
     {
         try {
             $this->bmp->open();
-            if (empty($capabilities)) {
-                $capabilities = $this->config;
-            }
-            $this->__setProxyCapabilities($capabilities);
         } catch (\Exception $e) {
             throw new ModuleException(__CLASS__, $e->getMessage());
         }
+        if (empty($capabilities)) {
+            $capabilities = $this->config;
+        }
+        $this->__setProxyCapabilities($capabilities);
         return $this->getProxyPort();
     }
 
@@ -214,6 +186,12 @@ class BrowserMob extends Module
             // check if method is callable
             if (is_callable($call)) {
                 $ret = call_user_func_array($call, $args);
+                if (get_class($ret) === 'Requests_Response') {
+                    $this->response = $ret;
+                    if (false === $ret->success) {
+                        throw new ModuleConfigException(__CLASS__, "Proxy response error '{$ret->status_code}' {$ret->body}");
+                    }
+                }
             } else {
                 throw new RuntimeException("Method ${method} does not exist or is not callable");
             }
