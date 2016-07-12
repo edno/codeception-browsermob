@@ -75,11 +75,9 @@ class BrowserMob extends Module
         return $response->success;
     }
 
-    protected function __setProxyCapabilities($capabilities)
+    protected function __setProxyCapabilities($options)
     {
-        $response = null;
-
-        foreach ($capabilities as $config => $data) {
+        foreach ($options as $config => $data) {
             if (false === empty($data)) {
                 switch ((string) $config) {
                     case 'blacklist':
@@ -175,14 +173,14 @@ class BrowserMob extends Module
     }
 
     // magic function that exposes BrowserMobProxy API pulic methods
-    public function __call($method, $args)
+    public function __call($name, $args)
     {
         // check if is a command call
-        if (preg_match('/^_[A-z]+$/', $method)) {
+        if (preg_match('/^_[A-z]+$/', $name)) {
             // extract standard method name
-            $method = preg_filter('/_/', '', $method);
+            $name = preg_filter('/_/', '', $name);
             // set call array for calling method
-            $call = array($this->bmp, $method);
+            $call = array($this->bmp, $name);
             // check if method is callable
             if (is_callable($call)) {
                 $ret = call_user_func_array($call, $args);
@@ -193,7 +191,7 @@ class BrowserMob extends Module
                     }
                 }
             } else {
-                throw new RuntimeException("Method ${method} does not exist or is not callable");
+                throw new RuntimeException("Method ${name} does not exist or is not callable");
             }
         } else {
             throw new RuntimeException("Method ${method} does not exist or is not callable");
