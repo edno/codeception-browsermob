@@ -71,12 +71,12 @@ env:
                         read: 10
                         connection: 10
                         dns: 10
-    redirect:
+    proxydns:
         modules:
             config:
                 Codeception\Extension\BrowserMob:
                     autostart: true
-                    redirect:
+                    dns:
                         - domain: example.local
                           ip: 127.0.0.1
                         - domain: github.com

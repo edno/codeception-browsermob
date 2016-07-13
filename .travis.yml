@@ -20,7 +20,7 @@ before_script:
   - sleep 5
 
 script:
- - ./vendor/bin/codecept run --env autostart --env default --env blacklist --env whitelist --env redirect --env basicAuth --env retry --env timeouts --env limits --coverage-xml
+ - ./vendor/bin/codecept run --env autostart --env default --env blacklist --env whitelist --env proxydns --env basicAuth --env retry --env timeouts --env limits --coverage-xml
 
 after_script:
   - ./vendor/bin/coveralls
