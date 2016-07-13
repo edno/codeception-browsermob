@@ -91,9 +91,6 @@ class BrowserMob extends Module
                     case 'whitelist':
                         $patterns = implode(',', $data['patterns']);
                         $this->_whitelist($patterns, $data['code']);
-                        if (false === $this->response->success) {
-                            break;
-                        }
                         break;
                     case 'limits':
                         $this->_limits($data);
@@ -104,7 +101,9 @@ class BrowserMob extends Module
                     case 'redirect':
                         foreach ($data as $entry) {
                             $this->_remapHosts($entry['domain'], $entry['ip']);
-                            if (false === $this->response->success) break;
+                            if (false === $this->response->success) {
+                                break;
+                            }
                         }
                         break;
                     case 'retry':
@@ -132,11 +131,7 @@ class BrowserMob extends Module
 
     public function openProxy($capabilities = null)
     {
-        try {
-            $this->bmp->open();
-        } catch (\Exception $e) {
-            throw new ModuleException(__CLASS__, $e->getMessage());
-        }
+        $this->_open();
         if (empty($capabilities)) {
             $capabilities = $this->config;
         }
@@ -146,36 +141,30 @@ class BrowserMob extends Module
 
     public function closeProxy()
     {
-        try {
-            $this->bmp->close();
-        } catch (\Exception $e) {
-            throw new ModuleException(__CLASS__, $e->getMessage());
-        }
+        $this->_close();
     }
 
     public function startHar()
     {
-        try {
-            $this->response = $this->bmp->newHar();
-        } catch (\Exception $e) {
-            throw new ModuleException(__CLASS__, $e->getMessage());
-        }
+        $this->_newHar();
         return $this->response->success;
     }
 
     public function startPage()
     {
-        try {
-            $this->response = $this->bmp->newPage();
-        } catch (\Exception $e) {
-            throw new ModuleException(__CLASS__, $e->getMessage());
-        }
+        $this->_newPage();
         return $this->response->success;
     }
 
     public function getHar()
     {
         return $this->bmp->har;
+    }
+
+    public function setHeaders($headers)
+    {
+        $this->response = $this->_headers($headers);
+        return $this->response->success;
     }
 
     // magic function that exposes BrowserMobProxy API pulic methods
