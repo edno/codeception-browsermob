@@ -83,9 +83,6 @@ class BrowserMob extends Module
                     case 'blacklist':
                         foreach ($data['patterns'] as $pattern) {
                             $this->_blacklist($pattern, $data['code']);
-                            if (false === $this->response->success) {
-                                break;
-                            }
                         }
                         break;
                     case 'whitelist':
@@ -101,9 +98,6 @@ class BrowserMob extends Module
                     case 'redirect':
                         foreach ($data as $entry) {
                             $this->_remapHosts($entry['domain'], $entry['ip']);
-                            if (false === $this->response->success) {
-                                break;
-                            }
                         }
                         break;
                     case 'retry':
@@ -112,9 +106,6 @@ class BrowserMob extends Module
                     case 'basicAuth':
                         foreach ($data as $entry) {
                             $this->_basicAuth($entry['domain'], $entry['options']);
-                            if (false === $this->response->success) {
-                                break;
-                            }
                         }
                         break;
                     default:
