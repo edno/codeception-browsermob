@@ -15,18 +15,6 @@ class BrowserMobProxyCest
     }
 
     /**
-     * @env autostart
-     */
-    public function parameterAutostart(FunctionalTester $I)
-    {
-        $port = $I->getProxyPort();
-        $I->assertNotNull($port);
-        $I->closeProxy();
-        $port = $I->getProxyPort();
-        $I->assertNotNull($port);
-    }
-
-    /**
      * @covers ::openProxy
      * @covers ::startHar
      * @covers ::getHar
@@ -50,6 +38,7 @@ class BrowserMobProxyCest
     }
 
     /**
+     * @env autostart
      * @env blacklist
      * @env whitelist
      * @env limits
