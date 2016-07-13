@@ -99,4 +99,22 @@ class BrowserMobProxyCest
         $I->assertEquals('http://codeception.com/', $har['log']['entries'][0]['request']['url']);
         $I->closeProxy();
     }
+
+    public function filterRequest(FunctionalTester $I)
+    {
+        $port = $I->openProxy();
+        $I->assertNotNull($port, "`${port}` is not a valid port");
+        $rep = $I->filterRequest("request.headers().remove('User-Agent'); request.headers().add('User-Agent', 'My-Custom-User-Agent-String 1.0');");
+        $I->assertTrue($rep);
+        $I->closeProxy();
+    }
+
+    public function filterResponse(FunctionalTester $I)
+    {
+        $port = $I->openProxy();
+        $I->assertNotNull($port, "`${port}` is not a valid port");
+        $rep = $I->filterResponse("contents.setTextContents('<html><body>Response successfully intercepted</body></html>');");
+        $I->assertTrue($rep);
+        $I->closeProxy();
+    }
 }

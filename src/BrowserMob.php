@@ -164,6 +164,18 @@ class BrowserMob extends Module
         return $this->response->success;
     }
 
+    public function filterRequest($script)
+    {
+        $this->_requestInterceptor($script);
+        return $this->response->success;
+    }
+
+    public function filterResponse($script)
+    {
+        $this->_responseInterceptor($script);
+        return $this->response->success;
+    }
+
     // magic function that exposes BrowserMobProxy API pulic methods
     public function __call($name, $args)
     {
