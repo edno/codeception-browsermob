@@ -95,7 +95,7 @@ class BrowserMob extends Module
                     case 'timeouts':
                         $this->_timeouts($data);
                         break;
-                    case 'redirect':
+                    case 'dns':
                         foreach ($data as $entry) {
                             $this->_remapHosts($entry['domain'], $entry['ip']);
                         }
@@ -141,7 +141,7 @@ class BrowserMob extends Module
         return $this->response->success;
     }
 
-    public function startPage()
+    public function addPage()
     {
         $this->_newPage();
         return $this->response->success;
