@@ -79,7 +79,7 @@ env:
                     dns:
                         - domain: example.local
                           ip: 127.0.0.1
-                        - domain: github.com
+                        - domain: wikipedia.org
                           ip: 192.168.1.1
     basicAuth:
         modules:
