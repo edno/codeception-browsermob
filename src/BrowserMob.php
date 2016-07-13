@@ -135,15 +135,15 @@ class BrowserMob extends Module
         $this->_close();
     }
 
-    public function startHar()
+    public function startHar($label = '')
     {
-        $this->_newHar();
+        $this->_newHar($label);
         return $this->response->success;
     }
 
-    public function addPage()
+    public function addPage($label = '')
     {
-        $this->_newPage();
+        $this->_newPage($label);
         return $this->response->success;
     }
 
