@@ -17,7 +17,8 @@
     },
     "require-dev": {
         "satooshi/php-coveralls": "^1.0",
-        "victorjonsson/markdowndocs": "dev-master"
+        "phpdocumentor/phpdocumentor": "^2.0",
+        "cvuorinen/phpdoc-markdown-public": "*"
     },
     "autoload": {
         "psr-4": {
@@ -45,8 +46,10 @@
             "docker rmi codecept/browsermob"
         ],
         "phpdoc-md": [
-            "mkdir -p docs",
-            "vendor/victorjonsson/markdowndocs/bin/phpdoc-md generate src > docs/extension.md"
+            "rm -rf docs",
+            "git clone https://github.com/edno/codeception-browsermob.wiki.git docs",
+            "./vendor/bin/phpdoc --quiet",
+            "mv docs/README.md docs/Codeception-BrowserMob-Proxy-extension-Documentation.md"
         ]
     }
 }

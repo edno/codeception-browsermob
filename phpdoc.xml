@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<phpdoc>
+    <title>Codeception BrowserMob Proxy extension Documentation</title>
+    <parser>
+        <target>docs/build</target>
+    </parser>
+    <transformer>
+        <target>docs</target>
+    </transformer>
+    <transformations>
+        <template name="vendor/cvuorinen/phpdoc-markdown-public/data/templates/markdown-public" />
+    </transformations>
+    <files>
+        <directory>src</directory>
+        <ignore>tests/*</ignore>
+        <ignore>vendor/*</ignore>
+    </files>
+</phpdoc>

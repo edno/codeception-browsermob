@@ -9,33 +9,45 @@ use \Requests;
 use \RuntimeException;
 
 /**
- * @method void _open()
- * @method void _close()
- * @method string _newHar(string $label='')
- * @method string _newPage(string $label='')
- * @method string _blacklist(string $regexp, integer $status_code)
- * @method string _whitelist(string $regexp, integer $status_code)
- * @method string _basicAuth(string $domain, string[] $options)
- * @method string _headers(string[] $options)
- * @method string _responseInterceptor(string $js)
- * @method string _requestInterceptor(string $js)
- * @method Requests_Response _limits(string[] $options)
- * @method Requests_Response _timeouts(string[] $options)
- * @method string _remapHosts(string $address, string $ip_address)
- * @method string _waitForTrafficToStop(integer $quiet_period, integer $timeout)
- * @method string _clearDnsCache()
- * @method string _rewriteUrl(string $match, string $replace)
- * @method string _retry(integer $retry_count)
+ * @method void _open() Open a new proxy using the PHPBrowserMobProxy_Client method
+ * @method void _close() Close current proxy using the PHPBrowserMobProxy_Client method
+ * @method \Requests_Response _newHar(string $label='') Start new HAR using the PHPBrowserMobProxy_Client method
+ * @method \Requests_Response _newPage(string $label='') Start new HAR page using the PHPBrowserMobProxy_Client method
+ * @method \Requests_Response _blacklist(string $regexp, integer $status_code) Blacklist URLs using the PHPBrowserMobProxy_Client method
+ * @method \Requests_Response _whitelist(string $regexp, integer $status_code) Whitelist URLs using the PHPBrowserMobProxy_Client method
+ * @method \Requests_Response _basicAuth(string $domain, string[] $options) Set HTTP authentication headers using the PHPBrowserMobProxy_Client method
+ * @method \Requests_Response _headers(string[] $options) Override requests HTTP headers using the PHPBrowserMobProxy_Client method
+ * @method \Requests_Response _responseInterceptor(string $js) Intercept HTTP responses using the PHPBrowserMobProxy_Client method
+ * @method \Requests_Response _requestInterceptor(string $js) Intercept HTTP requests using the PHPBrowserMobProxy_Client method
+ * @method \Requests_Response _limits(string[] $options) Set proxy limits using the PHPBrowserMobProxy_Client method
+ * @method \Requests_Response _timeouts(string[] $options) Set proxy timeouts using the PHPBrowserMobProxy_Client method
+ * @method \Requests_Response _remapHosts(string $address, string $ip_address) Map hosts to IP using the PHPBrowserMobProxy_Client method
+ * @method \Requests_Response _waitForTrafficToStop(integer $quiet_period, integer $timeout) Wait for traffic before stopping proxy using the PHPBrowserMobProxy_Client method
+ * @method string _clearDnsCache() Flux proxy DNS cache using the PHPBrowserMobProxy_Client method
+ * @method \Requests_Response _rewriteUrl(string $match, string $replace) Rewrite URLs using the PHPBrowserMobProxy_Client method
+ * @method \Requests_Response _retry(integer $retry_count) Set proxy retries using the PHPBrowserMobProxy_Client method
  */
 class BrowserMob extends Module
 {
 
+    /**
+     * @var string[] $config
+     */
     protected $config = ['host', 'port', 'autostart', 'blacklist', 'whitelist', 'limits', 'timeouts', 'dns', 'retry', 'basicAuth', 'littleproxy'];
 
-    protected $requiredFields = ['host'];
+    /**
+     * @var string[] $requiredFields
+     */
+    protected $requiredFields = ['host', 'port'];
 
+    /**
+     * @var Requests $response
+     */
     protected $response;
 
+    /**
+     * @var PHPBrowserMobProxy_Client $bmp
+     */
     private $bmp;
 
     /**
@@ -44,10 +56,7 @@ class BrowserMob extends Module
      */
     public function _initialize()
     {
-        $host = $this->config['host'];
-        if (isset($this->config['port'])) {
-            $host = $host.':'.$this->config['port'];
-        }
+        $host = $this->config['host'].':'.$this->config['port'];
 
         // test if proxy is available
         if (static::__pingProxy($host)) {
@@ -64,7 +73,14 @@ class BrowserMob extends Module
         }
     }
 
-    protected static function __pingProxy($url)
+    /**
+     * Verify if the BrowserMobProxy is reachable
+     *
+     * @param string $host BrowserMob Proxy host, format host:port
+     *
+     * @return boolean Returns true if proxy available, else false
+     */
+    protected static function __pingProxy($host)
     {
         try {
             $response = Requests::get('http://'.$url.'/proxy/');
@@ -75,6 +91,21 @@ class BrowserMob extends Module
         return $response->success;
     }
 
+    /**
+     * Set proxy capabilitites: blacklist, whitelist, limits, timeouts, dns, retry, basicAuth
+     *
+     * @uses BrowserMob::_blacklist
+     * @uses BrowserMob::_whitelist
+     * @uses BrowserMob::_limits
+     * @uses BrowserMob::_timeouts
+     * @uses BrowserMob::_remapHosts
+     * @uses BrowserMob::_retry
+     * @uses BrowserMob::_basicAuth
+     *
+     * @param mixed[] $options Array of options (see extension configuration)
+     *
+     * @return void
+     */
     protected function __setProxyCapabilities($options)
     {
         foreach ($options as $config => $data) {
@@ -115,11 +146,29 @@ class BrowserMob extends Module
         }
     }
 
+    /**
+     * Return current proxy port opened on BrowserMobProxy
+     *
+     * @return integer Proxy port
+     */
     public function getProxyPort()
     {
         return $this->bmp->port;
     }
 
+    /**
+     * Open a new proxy on BrowserMobProxy
+     *
+     * @see BrowserMob::__setProxyCapabilities
+     *
+     * @uses BrowserMob::_open
+     * @uses BrowserMob::__setProxyCapabilities
+     * @uses BrowserMob::getProxyPort
+     *
+     * @param mixed[]|null $capabilities Array of capabilities. Use extension configuration if null
+     *
+     * @return integer Proxy port
+     */
     public function openProxy($capabilities = null)
     {
         $this->_open();
@@ -130,53 +179,121 @@ class BrowserMob extends Module
         return $this->getProxyPort();
     }
 
+    /**
+     * Close the current proxy opened BrowserMobProxy
+     * Not supported by library chartjes/php-browsermob-proxy
+     *
+     * @uses BrowserMob::_close
+     *
+     * @return void
+     */
     public function closeProxy()
     {
         $this->_close();
     }
 
+    /**
+     * Start to capture the HTTP archive
+     *
+     * @uses BrowserMob::_newHar
+     *
+     * @param string|null $label Title of first HAR page
+     *
+     * @return boolean Command status
+     */
     public function startHar($label = '')
     {
         $this->_newHar($label);
         return $this->response->success;
     }
 
+    /**
+     * Add a new page to the HTTP archive
+     *
+     * @uses BrowserMob::_newPage
+     *
+     * @param string|null $label Title of new HAR page
+     *
+     * @return boolean Command status
+     */
     public function addPage($label = '')
     {
         $this->_newPage($label);
         return $this->response->success;
     }
 
+    /**
+     * Get the HTTP archive captured
+     *
+     * @return mixed[] HTTP archive
+     */
     public function getHar()
     {
         return $this->bmp->har;
     }
 
+    /**
+     * Override HTTP request headers
+     *
+     * @uses BrowserMob::_headers
+     *
+     * @param string[] $headers Array of HTTP headers
+     *
+     * @return boolean Command status
+     */
     public function setHeaders($headers)
     {
         $this->_headers($headers);
         return $this->response->success;
     }
 
+    /**
+     * Rewrite URLs with regex
+     *
+     * @uses BrowserMob::_rewriteUrl
+     *
+     * @param string $match Matching URL regular expression
+     * @param string $replace Replacement URL
+     *
+     * @return boolean Command status
+     */
     public function redirectUrl($match, $replace)
     {
         $this->_rewriteUrl($match, $replace);
         return $this->response->success;
     }
 
+    /**
+     * Run Javascript against requests before sending them
+     *
+     * @param string $script Javascript code
+     *
+     * @return boolean Command status
+     */
     public function filterRequest($script)
     {
         $this->_requestInterceptor($script);
         return $this->response->success;
     }
 
+    /**
+     * Run Javascript against responses received
+     *
+     * @param string $script Javascript code
+     *
+     * @return boolean Command status
+     */
     public function filterResponse($script)
     {
         $this->_responseInterceptor($script);
         return $this->response->success;
     }
 
-    // magic function that exposes BrowserMobProxy API pulic methods
+    /**
+     * Magic function that exposes BrowserMobProxy API pulic methods
+     *
+     * @ignore Exclude from documentation
+     */
     public function __call($name, $args)
     {
         // check if is a command call
