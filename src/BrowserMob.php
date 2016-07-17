@@ -23,7 +23,7 @@ use \RuntimeException;
  * @method \Requests_Response _timeouts(string[] $options) Set proxy timeouts using the PHPBrowserMobProxy_Client method
  * @method \Requests_Response _remapHosts(string $address, string $ip_address) Map hosts to IP using the PHPBrowserMobProxy_Client method
  * @method \Requests_Response _waitForTrafficToStop(integer $quiet_period, integer $timeout) Wait for traffic before stopping proxy using the PHPBrowserMobProxy_Client method
- * @method string _clearDnsCache() Flux proxy DNS cache using the PHPBrowserMobProxy_Client method
+ * @method \Requests_Response _clearDnsCache() Flux proxy DNS cache using the PHPBrowserMobProxy_Client method
  * @method \Requests_Response _rewriteUrl(string $match, string $replace) Rewrite URLs using the PHPBrowserMobProxy_Client method
  * @method \Requests_Response _retry(integer $retry_count) Set proxy retries using the PHPBrowserMobProxy_Client method
  */
