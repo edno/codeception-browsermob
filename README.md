@@ -13,6 +13,7 @@ The [Codeception](http://codeception.com/) module for [BrowserMob Proxy](http://
 ## Roadmap
 - [x] **0.1**: Initial version based on library [PHPBrowserMobProxy by chartjes](https://github.com/chartjes/PHPBrowserMobProxy/) with limited support of BrowserMob Proxy legacy API and no Littleproxy support.
 - [ ] 0.2: New PHP BrowserMob Proxy with full REST API support (Jetty and Littleproxy) and [proxy auto-configuration](https://en.wikipedia.org/wiki/Proxy_auto-config) feature.
+- [ ] 0.3: Full integration with Codeception modules [PhpBrowser](http://codeception.com/docs/modules/PhpBrowser) and [WebDriver](http://codeception.com/docs/modules/WebDriver)
 
 ## Minimum Requirements
 - Codeception 2.2
