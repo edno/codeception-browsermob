@@ -83,7 +83,7 @@ class BrowserMob extends Module
     protected static function __pingProxy($host)
     {
         try {
-            $response = Requests::get('http://'.$url.'/proxy/');
+            $response = Requests::get('http://'.$host.'/proxy/');
         } catch (\Exception $e) {
             throw new ModuleException(__CLASS__, $e->getMessage());
         }
