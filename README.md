@@ -8,10 +8,10 @@
 [![Coverage Status](https://img.shields.io/coveralls/edno/codeception-browsermob.svg?style=flat-square)](https://coveralls.io/github/edno/codeception-browsermob?branch=master)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://raw.githubusercontent.com/edno/codeception-secureshell/master/LICENSE)
 
-The [Codeception](http://codeception.com/) module for [BrowserMob Proxy](http://bmp.lightbody.net/)
+The [Codeception](http://codeception.com/) module for [BrowserMob Proxy](http://bmp.lightbody.net/).
 
 ## Roadmap
-- [x] **0.1**: Initial version based on library [PHPBrowserMobProxy by chartjes](https://github.com/chartjes/PHPBrowserMobProxy/) with imited support of BrowserMob Proxy legacy API and no Littleproxy support
+- [x] **0.1**: Initial version based on library [PHPBrowserMobProxy by chartjes](https://github.com/chartjes/PHPBrowserMobProxy/) with limited support of BrowserMob Proxy legacy API and no Littleproxy support.
 - [ ] 0.2: New PHP BrowserMob Proxy with full REST API support (Jetty and Littleproxy) and [proxy auto-configuration](https://en.wikipedia.org/wiki/Proxy_auto-config) feature.
 
 ## Minimum Requirements
@@ -20,7 +20,7 @@ The [Codeception](http://codeception.com/) module for [BrowserMob Proxy](http://
 - BrowserMob Proxy 2.0
 
 ## Installation
-The module can be installed using [Composer](https://getcomposer.org)
+The module can be installed using [Composer](https://getcomposer.org).
 
 ```bash
 $ composer require edno/codeception-browsermob
