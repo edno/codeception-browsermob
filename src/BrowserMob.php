@@ -157,6 +157,18 @@ class BrowserMob extends Module
     }
 
     /**
+     * Set current proxy port to use on BrowserMobProxy
+     *
+     * @param integer $port Proxy port
+     */
+    public function setProxyPort($port)
+    {
+        $prop = new \ReflectionProperty($this->bmp, 'port');
+        $prop->setAccessible(true);
+        $prop->setValue($this->bmp, $port);
+    }
+
+    /**
      * Open a new proxy on BrowserMobProxy
      *
      * @see BrowserMob::__setProxyCapabilities
