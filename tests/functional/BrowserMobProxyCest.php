@@ -53,6 +53,29 @@ class BrowserMobProxyCest
         //$I->assertNull($port); // BrowserMobProxy_Client issue
     }
 
+    public function captureHarTwice(FunctionalTester $I)
+    {
+        $port = $I->openProxy();
+        $I->assertNotNull($port, "`${port}` is not a valid port");
+        // first HAR
+        $rep = $I->startHar();
+        $I->assertTrue($rep);
+        Requests::get('http://codeception.com/', [], ['proxy' => "127.0.0.1:${port}"]);
+        $har = $I->getHar();
+        codecept_debug($har);
+        $I->assertEquals('BrowserMob Proxy', $har['log']['creator']['name']);
+        $I->assertNotEmpty($har['log']['entries']);
+        $I->assertEquals('http://codeception.com/', $har['log']['entries'][0]['request']['url']);
+        $I->assertNotNull($har['log']['entries'][0]['serverIPAddress']);
+        // second HAR
+        $rep = $I->startHar();
+        $I->assertTrue($rep);
+        Requests::get('http://github.com/', [], ['proxy' => "127.0.0.1:${port}"]);
+        $har = $I->getHar();
+        codecept_debug($har);
+        $I->assertEquals('http://github.com/', $har['log']['entries'][0]['request']['url']);
+    }
+
     /**
      * @covers ::openProxy
      * @covers ::startHar
