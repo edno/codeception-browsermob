@@ -70,7 +70,6 @@ class BrowserMobProxyCest
         // second HAR
         $rep = $I->startHar();
         $I->assertTrue($rep);
-<<<<<<< HEAD
         Requests::get(
             'http://bmp.lightbody.net/',
             [],
@@ -80,9 +79,6 @@ class BrowserMobProxyCest
                 'verifyname' => false
             ]
         );
-=======
-        Requests::get('http://github.com/', [], ['proxy' => "127.0.0.1:${port}"]);
->>>>>>> parent of 2fb411c... disable SSL verification for HTTP requests
         $har = $I->getHar();
         codecept_debug($har);
         $I->assertEquals('http://bmp.lightbody.net/', $har['log']['entries'][0]['request']['url']);
@@ -102,7 +98,6 @@ class BrowserMobProxyCest
         Requests::get('http://codeception.com/', [], ['proxy' => "127.0.0.1:${port}"]);
         $rep = $I->addPage('github');
         $I->assertTrue($rep);
-<<<<<<< HEAD
         Requests::get(
             'http://bmp.lightbody.net/',
             [],
@@ -112,9 +107,6 @@ class BrowserMobProxyCest
                 'verifyname' => false
             ]
         );
-=======
-        Requests::get('http://github.com/', [], ['proxy' => "127.0.0.1:${port}"]);
->>>>>>> parent of 2fb411c... disable SSL verification for HTTP requests
         $har = $I->getHar();
         $I->assertEquals('BrowserMob Proxy', $har['log']['creator']['name']);
         $I->assertNotEmpty($har['log']['entries']);
