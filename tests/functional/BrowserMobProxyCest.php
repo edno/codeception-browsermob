@@ -42,15 +42,7 @@ class BrowserMobProxyCest
         $I->assertNotNull($port, "`${port}` is not a valid port");
         $rep = $I->startHar();
         $I->assertTrue($rep);
-        Requests::get(
-            'http://codeception.com/',
-            [],
-            [
-                'proxy' => "127.0.0.1:${port}",
-                'verify' => false,
-                'verifyname' => false
-            ]
-        );
+        Requests::get('http://codeception.com/', [], ['proxy' => "127.0.0.1:${port}"]);
         $har = $I->getHar();
         $I->assertEquals('BrowserMob Proxy', $har['log']['creator']['name']);
         $I->assertNotEmpty($har['log']['entries']);
@@ -68,15 +60,7 @@ class BrowserMobProxyCest
         // first HAR
         $rep = $I->startHar();
         $I->assertTrue($rep);
-        Requests::get(
-            'http://codeception.com/',
-            [],
-            [
-                'proxy' => "127.0.0.1:${port}",
-                'verify' => false,
-                'verifyname' => false
-            ]
-        );
+        Requests::get('http://codeception.com/', [], ['proxy' => "127.0.0.1:${port}"]);
         $har = $I->getHar();
         codecept_debug($har);
         $I->assertEquals('BrowserMob Proxy', $har['log']['creator']['name']);
@@ -86,8 +70,9 @@ class BrowserMobProxyCest
         // second HAR
         $rep = $I->startHar();
         $I->assertTrue($rep);
+<<<<<<< HEAD
         Requests::get(
-            'http://github.com/',
+            'http://bmp.lightbody.net/',
             [],
             [
                 'proxy' => "127.0.0.1:${port}",
@@ -95,9 +80,12 @@ class BrowserMobProxyCest
                 'verifyname' => false
             ]
         );
+=======
+        Requests::get('http://github.com/', [], ['proxy' => "127.0.0.1:${port}"]);
+>>>>>>> parent of 2fb411c... disable SSL verification for HTTP requests
         $har = $I->getHar();
         codecept_debug($har);
-        $I->assertEquals('http://github.com/', $har['log']['entries'][0]['request']['url']);
+        $I->assertEquals('http://bmp.lightbody.net/', $har['log']['entries'][0]['request']['url']);
     }
 
     /**
@@ -111,19 +99,12 @@ class BrowserMobProxyCest
         $port = $I->openProxy();
         $I->assertNotNull($port, "`${port}` is not a valid port");
         $I->startHar('codeception');
-        Requests::get(
-            'http://codeception.com/',
-            [],
-            [
-                'proxy' => "127.0.0.1:${port}",
-                'verify' => false,
-                'verifyname' => false
-            ]
-        );
+        Requests::get('http://codeception.com/', [], ['proxy' => "127.0.0.1:${port}"]);
         $rep = $I->addPage('github');
         $I->assertTrue($rep);
+<<<<<<< HEAD
         Requests::get(
-            'http://github.com/',
+            'http://bmp.lightbody.net/',
             [],
             [
                 'proxy' => "127.0.0.1:${port}",
@@ -131,6 +112,9 @@ class BrowserMobProxyCest
                 'verifyname' => false
             ]
         );
+=======
+        Requests::get('http://github.com/', [], ['proxy' => "127.0.0.1:${port}"]);
+>>>>>>> parent of 2fb411c... disable SSL verification for HTTP requests
         $har = $I->getHar();
         $I->assertEquals('BrowserMob Proxy', $har['log']['creator']['name']);
         $I->assertNotEmpty($har['log']['entries']);
@@ -145,15 +129,7 @@ class BrowserMobProxyCest
         $rep = $I->setHeaders(['User-Agent' => 'BrowserMob-Agent']);
         $I->assertTrue($rep);
         $I->startHar('codeception');
-        Requests::get(
-            'http://codeception.com/',
-            [],
-            [
-                'proxy' => "127.0.0.1:${port}",
-                'verify' => false,
-                'verifyname' => false
-            ]
-        );
+        Requests::get('http://codeception.com/', [], ['proxy' => "127.0.0.1:${port}"]);
         $I->getHar();
         $I->closeProxy();
     }
@@ -165,15 +141,7 @@ class BrowserMobProxyCest
         $rep = $I->redirectUrl('http://testdomain.url/', 'http://codeception.com/');
         $I->assertTrue($rep);
         $I->startHar('codeception');
-        Requests::get(
-            'http://testdomain.url/',
-            [],
-            [
-                'proxy' => "127.0.0.1:${port}",
-                'verify' => false,
-                'verifyname' => false
-            ]
-        );
+        Requests::get('http://testdomain.url/', [], ['proxy' => "127.0.0.1:${port}"]);
         $har = $I->getHar();
         $I->assertEquals('http://codeception.com/', $har['log']['entries'][0]['request']['url']);
         $I->closeProxy();
