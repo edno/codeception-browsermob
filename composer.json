@@ -12,7 +12,7 @@
     ],
     "require": {
         "php": "^5.5 || ^7.0",
-        "codeception/codeception": "^2.2",
+        "codeception/codeception": ">=2.2",
         "chartjes/php-browsermob-proxy": "dev-master"
     },
     "require-dev": {
