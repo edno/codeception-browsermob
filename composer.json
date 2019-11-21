@@ -16,7 +16,7 @@
         "chartjes/php-browsermob-proxy": "dev-master"
     },
     "require-dev": {
-        "satooshi/php-coveralls": "^1.0",
+        "satooshi/php-coveralls": "^2.2",
         "phpdocumentor/phpdocumentor": "^2.0",
         "cvuorinen/phpdoc-markdown-public": "*"
     },
