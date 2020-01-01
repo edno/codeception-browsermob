@@ -16,9 +16,10 @@
         "chartjes/php-browsermob-proxy": "dev-master"
     },
     "require-dev": {
-        "satooshi/php-coveralls": "^1.0",
-        "phpdocumentor/phpdocumentor": "^2.0",
-        "cvuorinen/phpdoc-markdown-public": "*"
+        "php-coveralls/php-coveralls": "^2",
+        "phpdocumentor/phpdocumentor": "^2",
+        "cvuorinen/phpdoc-markdown-public": "*",
+        "codeception/module-asserts": "^1"
     },
     "autoload": {
         "psr-4": {
