@@ -17,7 +17,7 @@ The [Codeception](http://codeception.com/) module for [BrowserMob Proxy](http://
 
 ## Minimum Requirements
 - Codeception 2.2
-- PHP 5.5
+- PHP 7.2
 - BrowserMob Proxy 2.0
 
 ## Installation
